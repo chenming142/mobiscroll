@@ -31,9 +31,8 @@
             genWheels(area, s.label[i]);
         }
         wheels.push(wg);
-
-        function genWheels(area, lbl) {
-            var values = [], keys = [], w;
+        function genWheels(area, lbl, isRet) {
+            var values = [], keys = [];
             if($.isArray(area)){
                 for(var i = 0;i<area.length;i++){
                     values.push(area[i][1]);
@@ -44,6 +43,13 @@
                     values.push(_area);
                     keys.push(area[_area]);
                 }
+            }
+            if(isRet){
+                return {
+                    values : keys,
+                    keys :values,
+                    label : lbl
+                };
             }
             addWheel(wg, values, keys, lbl);
         }
@@ -63,12 +69,16 @@
                 console.log(arguments);
             },
             onChange : function(index, val, wheel){
-                var args = arguments;
                 clearTimeout(ttl);
-                ttl = setTimeout(function(){
-                    console.log("---onChange---");
-                    console.log(args);
-                }, 500);
+                if(parseInt(index) >= 0 && index < s.label.length - 1){
+                    var args = arguments, data, val, idx = parseInt(index) + 1;
+                    ttl = setTimeout(function(){
+                        val = val.split(" ")[index];
+                        data = genWheels(AREA['area'+idx][val], s.label[idx], true);
+                        wheel.setWheels(idx, data);
+                        wheel.changeWheel([idx], 50);
+                    }, 500);
+                }
             }
         }
     };

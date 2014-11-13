@@ -467,6 +467,10 @@
         }
 
         // Public functions
+        //--------------------------------------------------------------------
+        that.setWheels = function(i, wheel){
+            wheels[i] = wheel;
+        };
 
         /**
         * Positions the scroller on the screen.
@@ -637,11 +641,10 @@
             if (dw) {
                 var i = 0,
                     nr = idx.length;
-
                 $.each(s.wheels, function (j, wg) {
                     $.each(wg, function (k, w) {
                         if ($.inArray(i, idx) > -1) {
-                            wheels[i] = w;
+                            wheels[i] = wheels[i] || w;
                             $('.dw-ul', dw).eq(i).html(generateWheelItems(i));
                             nr--;
                             if (!nr) {
