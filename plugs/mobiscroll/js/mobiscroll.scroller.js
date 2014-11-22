@@ -385,7 +385,7 @@
                 if (that.live) {
                     setVal(manual, 0, true);
                 }
-
+                //TODO:先改变头部数据
                 $('.dwv', dw).html(formatHeader(v));
 
                 if (manual) {
